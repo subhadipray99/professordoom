@@ -1,0 +1,46 @@
+{
+  "hooks": [
+    {
+      "id": "resume-upload-reminder",
+      "name": "Resume Upload Reminder",
+      "description": "Reminds about PDF format requirements when discussing file uploads",
+      "trigger": {
+        "type": "onMessage",
+        "pattern": "upload|resume|file|pdf"
+      },
+      "action": {
+        "type": "sendMessage",
+        "message": "Remember: Professor Doom only accepts PDF resumes. Make sure the PDF contains selectable text, not scanned images."
+      },
+      "enabled": false
+    },
+    {
+      "id": "api-key-check",
+      "name": "API Key Security Check",
+      "description": "Warns about API key exposure when discussing environment variables",
+      "trigger": {
+        "type": "onMessage",
+        "pattern": "api.?key|env|secret|credential"
+      },
+      "action": {
+        "type": "sendMessage",
+        "message": "Security reminder: Never commit .env files with API keys. Use .env.example as a template."
+      },
+      "enabled": false
+    },
+    {
+      "id": "test-before-deploy",
+      "name": "Test Reminder",
+      "description": "Reminds to test API endpoints before deployment",
+      "trigger": {
+        "type": "onMessage",
+        "pattern": "deploy|production|live|host"
+      },
+      "action": {
+        "type": "sendMessage", 
+        "message": "Before deploying, test /api/test endpoint to verify Gemini API connectivity."
+      },
+      "enabled": false
+    }
+  ]
+}
