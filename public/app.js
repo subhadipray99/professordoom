@@ -863,3 +863,199 @@ function downloadSummaryAudio() {
 
 // Add summary section title
 sectionTitles['summary'] = '🎙️ Summary';
+
+
+// ==================== LEARNING CRYPT ====================
+
+const resourcesBtn = document.getElementById('resourcesBtn');
+const resourcesModal = document.getElementById('resourcesModal');
+const closeResources = document.getElementById('closeResources');
+const resourcesContent = document.getElementById('resourcesContent');
+const resourcesList = document.getElementById('resourcesList');
+const skillsTags = document.getElementById('skillsTags');
+const searchResourcesBtn = document.getElementById('searchResourcesBtn');
+
+let selectedSkills = [];
+let extractedSkills = [];
+
+// Open resources modal
+resourcesBtn.addEventListener('click', () => {
+    resourcesModal.style.display = 'flex';
+    extractSkillsFromResume();
+});
+
+// Close resources modal
+closeResources.addEventListener('click', () => {
+    resourcesModal.style.display = 'none';
+    resetResourcesModal();
+});
+
+resourcesModal.addEventListener('click', (e) => {
+    if (e.target === resourcesModal) {
+        resourcesModal.style.display = 'none';
+        resetResourcesModal();
+    }
+});
+
+// Extract skills from resume analysis
+function extractSkillsFromResume() {
+    const analysis = resumeData?.analysis || '';
+    const resumeText = rawResumeText || '';
+    
+    // Common skill keywords to look for
+    const skillPatterns = [
+        /javascript/gi, /python/gi, /java\b/gi, /react/gi, /node\.?js/gi,
+        /html/gi, /css/gi, /sql/gi, /mongodb/gi, /aws/gi, /docker/gi,
+        /kubernetes/gi, /git/gi, /typescript/gi, /angular/gi, /vue/gi,
+        /machine learning/gi, /data analysis/gi, /excel/gi, /powerpoint/gi,
+        /communication/gi, /leadership/gi, /project management/gi,
+        /agile/gi, /scrum/gi, /devops/gi, /ci\/cd/gi, /linux/gi,
+        /photoshop/gi, /figma/gi, /ui\/ux/gi, /design/gi,
+        /marketing/gi, /seo/gi, /content writing/gi, /sales/gi,
+        /c\+\+/gi, /c#/gi, /ruby/gi, /php/gi, /swift/gi, /kotlin/gi,
+        /tensorflow/gi, /pytorch/gi, /nlp/gi, /deep learning/gi,
+        /blockchain/gi, /solidity/gi, /web3/gi, /cloud/gi
+    ];
+    
+    const foundSkills = new Set();
+    const combinedText = analysis + ' ' + resumeText;
+    
+    skillPatterns.forEach(pattern => {
+        const matches = combinedText.match(pattern);
+        if (matches) {
+            foundSkills.add(matches[0].toLowerCase());
+        }
+    });
+    
+    extractedSkills = Array.from(foundSkills).slice(0, 15);
+    
+    // Add some default improvement areas if few skills found
+    if (extractedSkills.length < 5) {
+        const defaults = ['communication', 'leadership', 'problem solving', 'time management'];
+        defaults.forEach(s => {
+            if (!extractedSkills.includes(s)) extractedSkills.push(s);
+        });
+    }
+    
+    renderSkillTags();
+}
+
+// Render skill tags
+function renderSkillTags() {
+    if (extractedSkills.length === 0) {
+        skillsTags.innerHTML = '<p style="color: var(--text-dim);">No skills detected. Try uploading a resume first.</p>';
+        return;
+    }
+    
+    skillsTags.innerHTML = extractedSkills.map(skill => `
+        <button class="skill-tag" onclick="toggleSkill('${skill}')">${skill}</button>
+    `).join('');
+}
+
+// Toggle skill selection
+function toggleSkill(skill) {
+    const btn = event.target;
+    
+    if (selectedSkills.includes(skill)) {
+        selectedSkills = selectedSkills.filter(s => s !== skill);
+        btn.classList.remove('selected');
+    } else {
+        if (selectedSkills.length < 5) {
+            selectedSkills.push(skill);
+            btn.classList.add('selected');
+        } else {
+            alert('Maximum 5 skills can be selected');
+        }
+    }
+}
+
+// Search for resources
+searchResourcesBtn.addEventListener('click', searchResources);
+
+async function searchResources() {
+    if (selectedSkills.length === 0) {
+        alert('Please select at least one skill to improve');
+        return;
+    }
+    
+    searchResourcesBtn.disabled = true;
+    searchResourcesBtn.textContent = '🔮 Summoning ancient knowledge...';
+    
+    resourcesContent.style.display = 'none';
+    resourcesList.style.display = 'block';
+    resourcesList.innerHTML = `
+        <div class="resources-loading">
+            <div class="spinner"></div>
+            <p>Searching the crypts for learning scrolls...</p>
+        </div>
+    `;
+    
+    try {
+        const response = await fetch('/api/resources', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ skills: selectedSkills })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.resources.length > 0) {
+            renderResources(data.resources);
+        } else {
+            resourcesList.innerHTML = `
+                <div class="no-resources">
+                    <p>📚 No scrolls found in the crypt...</p>
+                    <p>Try selecting different skills.</p>
+                    <button class="back-to-skills" onclick="backToSkills()">← Back to Skills</button>
+                </div>
+            `;
+        }
+    } catch (error) {
+        resourcesList.innerHTML = `
+            <div class="no-resources">
+                <p>⚠️ The crypt is sealed: ${error.message}</p>
+                <button class="back-to-skills" onclick="backToSkills()">← Try Again</button>
+            </div>
+        `;
+    } finally {
+        searchResourcesBtn.disabled = false;
+        searchResourcesBtn.textContent = '🔮 Summon Resources';
+    }
+}
+
+// Render resources
+function renderResources(resources) {
+    resourcesList.innerHTML = `
+        <div class="resources-grid">
+            ${resources.map(r => `
+                <div class="resource-card">
+                    <h4>${truncateText(r.title, 60)}</h4>
+                    <p>${truncateText(r.snippet, 150)}</p>
+                    <a href="${r.url}" target="_blank" rel="noopener">🔗 Open Scroll</a>
+                </div>
+            `).join('')}
+        </div>
+        <button class="back-to-skills" onclick="backToSkills()">← Search More Skills</button>
+    `;
+}
+
+// Truncate text helper
+function truncateText(text, maxLength) {
+    if (!text) return '';
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+}
+
+// Back to skills selection
+function backToSkills() {
+    resourcesList.style.display = 'none';
+    resourcesContent.style.display = 'block';
+    selectedSkills = [];
+    renderSkillTags();
+}
+
+// Reset modal
+function resetResourcesModal() {
+    resourcesList.style.display = 'none';
+    resourcesContent.style.display = 'block';
+    selectedSkills = [];
+}

@@ -180,6 +180,10 @@
                         <span class="lock-icon" id="summaryLock">🔒</span>
                         <span class="unlock-progress" id="unlockProgress">0/3</span>
                     </button>
+                    
+                    <button class="resources-btn" id="resourcesBtn">
+                        <span class="icon">📚</span> Learning Crypt
+                    </button>
                 </div>
 
                 <button class="new-resume-btn" id="newResumeBtn">
@@ -247,6 +251,32 @@
             
             <div class="room-content" id="summaryContent">
                 <!-- Dynamic content will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Crypt Modal -->
+    <div class="modal-overlay" id="resourcesModal" style="display: none;">
+        <div class="resources-crypt">
+            <div class="crypt-header">
+                <span class="crypt-icon">📚</span>
+                <h2>The Learning Crypt</h2>
+                <p>Ancient scrolls of knowledge to resurrect your skills...</p>
+                <button class="close-modal" id="closeResources">&times;</button>
+            </div>
+            
+            <div class="crypt-content" id="resourcesContent">
+                <div class="skills-select">
+                    <p>Select skills you want to improve:</p>
+                    <div class="skills-tags" id="skillsTags">
+                        <!-- Skills will be populated here -->
+                    </div>
+                    <button class="search-resources-btn" id="searchResourcesBtn">🔮 Summon Resources</button>
+                </div>
+            </div>
+            
+            <div class="resources-list" id="resourcesList" style="display: none;">
+                <!-- Resources will appear here -->
             </div>
         </div>
     </div>

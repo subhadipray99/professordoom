@@ -1492,3 +1492,243 @@ body.no-scroll {
         font-size: 1.4em;
     }
 }
+
+
+/* ==================== LEARNING CRYPT ==================== */
+
+.resources-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(75, 0, 130, 0.15);
+    border: 1px solid #9370db;
+    border-radius: 10px;
+    color: #9370db;
+    font-family: inherit;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.resources-btn:hover {
+    background: rgba(75, 0, 130, 0.25);
+    box-shadow: 0 0 15px rgba(147, 112, 219, 0.4);
+    transform: translateY(-2px);
+}
+
+.resources-crypt {
+    background: var(--bg-card);
+    border: 2px solid #9370db;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 50px rgba(147, 112, 219, 0.4);
+    animation: slideUp 0.3s ease;
+}
+
+.crypt-header {
+    padding: 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    background: linear-gradient(180deg, rgba(75, 0, 130, 0.2) 0%, transparent 100%);
+}
+
+.crypt-icon {
+    font-size: 3em;
+    display: block;
+    margin-bottom: 10px;
+    animation: bookFloat 3s ease-in-out infinite;
+}
+
+@keyframes bookFloat {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.crypt-header h2 {
+    font-family: 'Creepster', cursive;
+    font-size: 2em;
+    color: #9370db;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(147, 112, 219, 0.5);
+}
+
+.crypt-header p {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+.crypt-content {
+    padding: 24px;
+}
+
+.skills-select p {
+    color: var(--text);
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.skill-tag {
+    padding: 10px 18px;
+    background: rgba(147, 112, 219, 0.1);
+    border: 1px solid rgba(147, 112, 219, 0.3);
+    border-radius: 20px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.skill-tag:hover {
+    background: rgba(147, 112, 219, 0.2);
+    border-color: #9370db;
+}
+
+.skill-tag.selected {
+    background: #9370db;
+    color: white;
+    border-color: #9370db;
+}
+
+.search-resources-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #9370db, #6a0dad);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: inherit;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(147, 112, 219, 0.4);
+}
+
+.search-resources-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(147, 112, 219, 0.5);
+}
+
+.search-resources-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.resources-list {
+    padding: 0 24px 24px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.resources-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.resource-card {
+    background: rgba(147, 112, 219, 0.05);
+    border: 1px solid rgba(147, 112, 219, 0.2);
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.2s;
+}
+
+.resource-card:hover {
+    background: rgba(147, 112, 219, 0.1);
+    border-color: #9370db;
+    transform: translateX(5px);
+}
+
+.resource-card h4 {
+    color: #9370db;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.resource-card h4::before {
+    content: '📜';
+}
+
+.resource-card p {
+    color: var(--text-dim);
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.resource-card a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #9370db;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: color 0.2s;
+}
+
+.resource-card a:hover {
+    color: #b19cd9;
+    text-decoration: underline;
+}
+
+.resources-loading {
+    text-align: center;
+    padding: 40px;
+}
+
+.resources-loading .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(147, 112, 219, 0.2);
+    border-top-color: #9370db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.resources-loading p {
+    color: #9370db;
+}
+
+.no-resources {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-dim);
+}
+
+.back-to-skills {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid #9370db;
+    border-radius: 8px;
+    color: #9370db;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.back-to-skills:hover {
+    background: rgba(147, 112, 219, 0.1);
+}

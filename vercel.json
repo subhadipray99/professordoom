@@ -28,6 +28,10 @@
       "dest": "/api/summary.js"
     },
     {
+      "src": "/api/resources",
+      "dest": "/api/resources.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }
