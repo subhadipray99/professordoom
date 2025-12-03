@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 async function callGemini(prompt) {
   const apiKey = process.env.GEMINI_API_KEY;
