@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Doom's Resume Roaster</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="screen" id="landingScreen">
+        <!-- Animated Background -->
+        <div class="landing-bg">
+            <div class="candles">
+                <div class="candle c1">🕯️</div>
+                <div class="candle c2">🕯️</div>
+                <div class="candle c3">🕯️</div>
+                <div class="candle c4">🕯️</div>
+                <div class="candle c5">🕯️</div>
+                <div class="candle c6">🕯️</div>
+            </div>
+            <div class="bats">
+                <span class="bat">🦇</span>
+                <span class="bat">🦇</span>
+                <span class="bat">🦇</span>
+            </div>
+            <div class="fog-layer"></div>
+        </div>
+
+        <div class="landing-content">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="professor-showcase">
+                    <div class="glow-ring"></div>
+                    <div class="glow-ring ring2"></div>
+                    <span class="big-professor">🎃</span>
+                </div>
+                
+                <h1 class="landing-title">
+                    <span class="title-line">Professor</span>
+                    <span class="title-line doom">Doom</span>
+                </h1>
+                <p class="landing-tagline">The Resume Roaster from Beyond the Grave</p>
+                
+                <div class="tagline-sub">
+                    <span class="typing-text" id="typingText"></span>
+                    <span class="cursor">|</span>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features-section">
+                <h2 class="section-heading">What Awaits You</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔥</div>
+                        <h3>Brutal Roasts</h3>
+                        <p>Get your resume torn apart with dark humor and brutal honesty</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Replacement Risk</h3>
+                        <p>Find out if robots are coming for your job</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🕯️</div>
+                        <h3>Confession Booth</h3>
+                        <p>Confess your resume sins and get redemption tips</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎙️</div>
+                        <h3>Voice Summary</h3>
+                        <p>Hear Professor Doom introduce you to the world</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professor Image Showcase -->
+            <div class="showcase-section">
+                <img src="professor.png" alt="Professor Doom" class="showcase-img">
+                <div class="showcase-text">
+                    <p>"I've seen thousands of resumes... most belong in a graveyard."</p>
+                    <span>- Professor Doom</span>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <button class="enter-btn" id="enterBtn">
+                    <span class="btn-text">Enter If You Dare</span>
+                    <span class="btn-icon">💀</span>
+                </button>
+                <p class="landing-warning">⚠️ Warning: Professor Doom doesn't sugarcoat. Prepare for brutal honesty.</p>
+            </div>
+        </div>
+        
+        <div class="landing-footer">
+            <div class="footer-content">
+                <p>Powered by dark magic, Gemini AI & ElevenLabs</p>
+                <div class="footer-icons">
+                    <span>🎃</span>
+                    <span>💀</span>
+                    <span>👻</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Screen -->
+    <div class="screen" id="uploadScreen" style="display: none;">
+        <div class="fog"></div>
+        <div class="container">
+            <div class="professor-header">
+                <div class="professor-icon">🎃</div>
+                <h1>Professor Doom</h1>
+                <p class="subtitle">Resume Analyzer from the Beyond</p>
+            </div>
+            
+            <div class="upload-box" id="uploadBox">
+                <input type="file" id="resumeInput" accept=".pdf" hidden>
+                <div class="upload-content">
+                    <div class="skull-icon">💀</div>
+                    <p>Drop your resume here... if you dare</p>
+                    <small>PDF format only</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="screen" id="loadingScreen" style="display: none;">
+        <div class="fog"></div>
+        <div class="loading-container">
+            <div class="professor-face">🎃</div>
+            <div class="loading-text" id="loadingText">Creepy professor snatched your resume...</div>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chat Screen -->
+    <div class="screen" id="mainScreen" style="display: none;">
+        <div class="app-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="professor-small">🎃</div>
+                    <span>Professor Doom</span>
+                </div>
+                
+                <div class="sidebar-sections">
+                    <button class="section-btn active" data-section="roast">
+                        <span class="icon">🔥</span> Roast Me
+                    </button>
+                    <button class="section-btn" data-section="ai-replace">
+                        <span class="icon">🤖</span> Can AI Replace Me?
+                    </button>
+                    <button class="section-btn" data-section="futureproof">
+                        <span class="icon">🛡️</span> Futureproof Score
+                    </button>
+                    <button class="section-btn" data-section="improve">
+                        <span class="icon">📈</span> What to Improve
+                    </button>
+                    <button class="section-btn" data-section="jobs">
+                        <span class="icon">💼</span> Eligible Jobs
+                    </button>
+                    
+                    <div class="sidebar-divider"></div>
+                    
+                    <button class="confession-btn" id="confessionBtn">
+                        <span class="icon">🕯️</span> Confession Booth
+                        <span class="confession-count" id="confessionCount" style="display: none;">0</span>
+                    </button>
+                    
+                    <button class="summary-btn locked" id="summaryBtn">
+                        <span class="icon">🎙️</span> Summary Room
+                        <span class="lock-icon" id="summaryLock">🔒</span>
+                        <span class="unlock-progress" id="unlockProgress">0/3</span>
+                    </button>
+                </div>
+
+                <button class="new-resume-btn" id="newResumeBtn">
+                    <span>📄</span> New Resume
+                </button>
+            </aside>
+
+            <!-- Chat Area -->
+            <main class="chat-area">
+                <div class="chat-messages" id="chatMessages"></div>
+                
+                <div class="chat-input-area">
+                    <div class="audio-controls" id="audioControls" style="display: none;">
+                        <button class="audio-btn pause-btn" id="pauseBtn">⏸️ Pause</button>
+                        <button class="audio-btn stop-btn" id="stopBtn">⏹️ Stop</button>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="chatInput" placeholder="Ask Professor Doom anything about your resume...">
+                        <button id="sendBtn">Send</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <audio id="audioPlayer"></audio>
+
+    <!-- Confession Booth Modal -->
+    <div class="modal-overlay" id="confessionModal" style="display: none;">
+        <div class="confession-booth">
+            <div class="booth-header">
+                <span class="booth-icon">🕯️</span>
+                <h2>The Confession Booth</h2>
+                <p>Confess your resume sins, child...</p>
+                <button class="close-modal" id="closeConfession">&times;</button>
+            </div>
+            
+            <div class="booth-content">
+                <div class="confessions-list" id="confessionsList">
+                    <!-- Confessions will appear here -->
+                </div>
+                
+                <div class="add-confession">
+                    <textarea id="confessionInput" placeholder="I confess that I exaggerated about... (e.g., 'I said I led a team of 10, but it was actually 3')"></textarea>
+                    <button id="addConfessionBtn">🙏 Confess</button>
+                </div>
+            </div>
+            
+            <div class="booth-footer">
+                <p class="confession-note">Your confessions help Professor Doom give you better advice on how to actually achieve these claims.</p>
+                <button id="getAbsolutionBtn" class="absolution-btn">⚡ Get Absolution & Advice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Room Modal -->
+    <div class="modal-overlay" id="summaryModal" style="display: none;">
+        <div class="summary-room">
+            <div class="room-header">
+                <span class="room-icon">🎙️</span>
+                <h2>The Summary Room</h2>
+                <p>Let me introduce you to the world...</p>
+                <button class="close-modal" id="closeSummary">&times;</button>
+            </div>
+            
+            <div class="room-content" id="summaryContent">
+                <!-- Dynamic content will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
