@@ -1059,3 +1059,145 @@ function resetResourcesModal() {
     resourcesContent.style.display = 'block';
     selectedSkills = [];
 }
+
+
+// ==================== SKILL TRENDS CHAMBER ====================
+
+const trendsBtn = document.getElementById('trendsBtn');
+const trendsModal = document.getElementById('trendsModal');
+const closeTrends = document.getElementById('closeTrends');
+const trendsContent = document.getElementById('trendsContent');
+const trendsList = document.getElementById('trendsList');
+const industryOptions = document.getElementById('industryOptions');
+const customIndustry = document.getElementById('customIndustry');
+const searchTrendsBtn = document.getElementById('searchTrendsBtn');
+
+let selectedIndustry = '';
+
+// Open trends modal
+trendsBtn.addEventListener('click', () => {
+    trendsModal.style.display = 'flex';
+    resetTrendsModal();
+});
+
+// Close trends modal
+closeTrends.addEventListener('click', () => {
+    trendsModal.style.display = 'none';
+});
+
+trendsModal.addEventListener('click', (e) => {
+    if (e.target === trendsModal) {
+        trendsModal.style.display = 'none';
+    }
+});
+
+// Industry button selection
+industryOptions.addEventListener('click', (e) => {
+    if (e.target.classList.contains('industry-btn')) {
+        document.querySelectorAll('.industry-btn').forEach(btn => btn.classList.remove('selected'));
+        e.target.classList.add('selected');
+        selectedIndustry = e.target.dataset.industry;
+        customIndustry.value = '';
+    }
+});
+
+// Custom industry input
+customIndustry.addEventListener('input', () => {
+    if (customIndustry.value.trim()) {
+        document.querySelectorAll('.industry-btn').forEach(btn => btn.classList.remove('selected'));
+        selectedIndustry = customIndustry.value.trim();
+    }
+});
+
+// Search trends
+searchTrendsBtn.addEventListener('click', searchTrends);
+
+async function searchTrends() {
+    const industry = customIndustry.value.trim() || selectedIndustry;
+    
+    if (!industry) {
+        alert('Please select or enter an industry');
+        return;
+    }
+    
+    searchTrendsBtn.disabled = true;
+    searchTrendsBtn.textContent = '🔮 Gazing into the future...';
+    
+    trendsContent.style.display = 'none';
+    trendsList.style.display = 'block';
+    trendsList.innerHTML = `
+        <div class="trends-loading">
+            <div class="spinner"></div>
+            <p>Consulting the spirits of industry trends...</p>
+        </div>
+    `;
+    
+    try {
+        const response = await fetch('/api/trends', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ industry })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.trends.length > 0) {
+            renderTrends(data.trends, industry);
+        } else {
+            trendsList.innerHTML = `
+                <div class="no-resources">
+                    <p>🔮 The crystal ball is cloudy...</p>
+                    <p>No trends found for this industry.</p>
+                    <button class="back-to-industries" onclick="backToIndustries()">← Try Another Industry</button>
+                </div>
+            `;
+        }
+    } catch (error) {
+        trendsList.innerHTML = `
+            <div class="no-resources">
+                <p>⚠️ The spirits are silent: ${error.message}</p>
+                <button class="back-to-industries" onclick="backToIndustries()">← Try Again</button>
+            </div>
+        `;
+    } finally {
+        searchTrendsBtn.disabled = false;
+        searchTrendsBtn.textContent = '🔮 Reveal Trends';
+    }
+}
+
+// Render trends
+function renderTrends(trends, industry) {
+    trendsList.innerHTML = `
+        <div class="trends-header-info">
+            <p style="color: #ff8c00; margin-bottom: 15px; text-align: center;">
+                🔥 Trending skills in <strong>${industry}</strong>
+            </p>
+        </div>
+        <div class="trends-grid">
+            ${trends.map(t => `
+                <div class="trend-card">
+                    <h4>${truncateText(t.title, 60)}</h4>
+                    <p>${truncateText(t.snippet, 180)}</p>
+                    <a href="${t.url}" target="_blank" rel="noopener">🔗 Read More</a>
+                </div>
+            `).join('')}
+        </div>
+        <button class="back-to-industries" onclick="backToIndustries()">← Explore Another Industry</button>
+    `;
+}
+
+// Back to industry selection
+function backToIndustries() {
+    trendsList.style.display = 'none';
+    trendsContent.style.display = 'block';
+    resetTrendsModal();
+}
+
+// Reset modal
+function resetTrendsModal() {
+    trendsList.style.display = 'none';
+    trendsContent.style.display = 'block';
+    selectedIndustry = '';
+    customIndustry.value = '';
+    document.querySelectorAll('.industry-btn').forEach(btn => btn.classList.remove('selected'));
+}

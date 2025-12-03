@@ -1732,3 +1732,258 @@ body.no-scroll {
 .back-to-skills:hover {
     background: rgba(147, 112, 219, 0.1);
 }
+
+
+/* ==================== SKILL TRENDS CHAMBER ==================== */
+
+.trends-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255, 140, 0, 0.15);
+    border: 1px solid #ff8c00;
+    border-radius: 10px;
+    color: #ff8c00;
+    font-family: inherit;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.trends-btn:hover {
+    background: rgba(255, 140, 0, 0.25);
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.trends-chamber {
+    background: var(--bg-card);
+    border: 2px solid #ff8c00;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 50px rgba(255, 140, 0, 0.4);
+    animation: slideUp 0.3s ease;
+}
+
+.chamber-header {
+    padding: 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    background: linear-gradient(180deg, rgba(255, 140, 0, 0.15) 0%, transparent 100%);
+}
+
+.chamber-icon {
+    font-size: 3em;
+    display: block;
+    margin-bottom: 10px;
+    animation: trendPulse 2s ease-in-out infinite;
+}
+
+@keyframes trendPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.chamber-header h2 {
+    font-family: 'Creepster', cursive;
+    font-size: 2em;
+    color: #ff8c00;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(255, 140, 0, 0.5);
+}
+
+.chamber-header p {
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+.chamber-content {
+    padding: 24px;
+}
+
+.industry-select p {
+    color: var(--text);
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.industry-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.industry-btn {
+    padding: 12px 18px;
+    background: rgba(255, 140, 0, 0.1);
+    border: 1px solid rgba(255, 140, 0, 0.3);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.industry-btn:hover {
+    background: rgba(255, 140, 0, 0.2);
+    border-color: #ff8c00;
+    transform: translateY(-2px);
+}
+
+.industry-btn.selected {
+    background: #ff8c00;
+    color: var(--bg-dark);
+    border-color: #ff8c00;
+}
+
+.custom-industry {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+#customIndustry {
+    flex: 1;
+    padding: 14px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1em;
+}
+
+#customIndustry:focus {
+    outline: none;
+    border-color: #ff8c00;
+}
+
+.search-trends-btn {
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #ff8c00, #cc7000);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.search-trends-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 140, 0, 0.4);
+}
+
+.search-trends-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.trends-list {
+    padding: 0 24px 24px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.trends-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.trend-card {
+    background: rgba(255, 140, 0, 0.05);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.2s;
+}
+
+.trend-card:hover {
+    background: rgba(255, 140, 0, 0.1);
+    border-color: #ff8c00;
+    transform: translateX(5px);
+}
+
+.trend-card h4 {
+    color: #ff8c00;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trend-card h4::before {
+    content: '🔥';
+}
+
+.trend-card p {
+    color: var(--text-dim);
+    font-size: 0.9em;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.trend-card a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #ff8c00;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.trend-card a:hover {
+    color: #ffaa44;
+    text-decoration: underline;
+}
+
+.trends-loading {
+    text-align: center;
+    padding: 40px;
+}
+
+.trends-loading .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 140, 0, 0.2);
+    border-top-color: #ff8c00;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.trends-loading p {
+    color: #ff8c00;
+}
+
+.back-to-industries {
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid #ff8c00;
+    border-radius: 8px;
+    color: #ff8c00;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.back-to-industries:hover {
+    background: rgba(255, 140, 0, 0.1);
+}

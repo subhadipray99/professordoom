@@ -184,6 +184,10 @@
                     <button class="resources-btn" id="resourcesBtn">
                         <span class="icon">📚</span> Learning Crypt
                     </button>
+                    
+                    <button class="trends-btn" id="trendsBtn">
+                        <span class="icon">📈</span> Skill Trends
+                    </button>
                 </div>
 
                 <button class="new-resume-btn" id="newResumeBtn">
@@ -251,6 +255,46 @@
             
             <div class="room-content" id="summaryContent">
                 <!-- Dynamic content will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Skill Trends Modal -->
+    <div class="modal-overlay" id="trendsModal" style="display: none;">
+        <div class="trends-chamber">
+            <div class="chamber-header">
+                <span class="chamber-icon">📈</span>
+                <h2>The Trends Chamber</h2>
+                <p>Glimpse into the future of your industry...</p>
+                <button class="close-modal" id="closeTrends">&times;</button>
+            </div>
+            
+            <div class="chamber-content" id="trendsContent">
+                <div class="industry-select">
+                    <p>What dark realm do you work in?</p>
+                    <div class="industry-options" id="industryOptions">
+                        <button class="industry-btn" data-industry="software development">💻 Software Dev</button>
+                        <button class="industry-btn" data-industry="data science">📊 Data Science</button>
+                        <button class="industry-btn" data-industry="web development">🌐 Web Dev</button>
+                        <button class="industry-btn" data-industry="mobile development">📱 Mobile Dev</button>
+                        <button class="industry-btn" data-industry="devops cloud">☁️ DevOps/Cloud</button>
+                        <button class="industry-btn" data-industry="cybersecurity">🔒 Cybersecurity</button>
+                        <button class="industry-btn" data-industry="AI machine learning">🤖 AI/ML</button>
+                        <button class="industry-btn" data-industry="product management">📋 Product Mgmt</button>
+                        <button class="industry-btn" data-industry="UI UX design">🎨 UI/UX Design</button>
+                        <button class="industry-btn" data-industry="digital marketing">📣 Marketing</button>
+                        <button class="industry-btn" data-industry="finance fintech">💰 Finance/Fintech</button>
+                        <button class="industry-btn" data-industry="healthcare tech">🏥 Healthcare Tech</button>
+                    </div>
+                    <div class="custom-industry">
+                        <input type="text" id="customIndustry" placeholder="Or type your industry...">
+                        <button class="search-trends-btn" id="searchTrendsBtn">🔮 Reveal Trends</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="trends-list" id="trendsList" style="display: none;">
+                <!-- Trends will appear here -->
             </div>
         </div>
     </div>
