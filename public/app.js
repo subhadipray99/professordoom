@@ -774,6 +774,13 @@ async function playSummaryAudio() {
     const playBtn = document.querySelector('.play-summary-btn');
     const downloadBtn = document.getElementById('downloadBtn');
     
+    console.log('Summary text to speak:', summaryData.summaryText);
+    
+    if (!summaryData.summaryText) {
+        alert('No summary text available!');
+        return;
+    }
+    
     playBtn.disabled = true;
     playBtn.innerHTML = '⏳ Generating...';
     
@@ -783,6 +790,8 @@ async function playSummaryAudio() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: summaryData.summaryText })
         });
+        
+        console.log('Speak response status:', response.status);
         
         if (response.ok) {
             const blob = await response.blob();
