@@ -1313,3 +1313,43 @@ console.log('%c🎃 Professor Doom is watching your console... 💀',
     'color: #ff4444; font-size: 20px; font-weight: bold; text-shadow: 2px 2px #000;');
 console.log('%cBuilt for Kiroween Hackathon 2024', 
     'color: #8a2be2; font-size: 14px;');
+
+
+// ==================== VIDEO BACKGROUND CONTROLS ====================
+
+const bgVideo = document.getElementById('bgVideo');
+const muteBtn = document.getElementById('muteBtn');
+const pauseVideoBtn = document.getElementById('pauseVideoBtn');
+
+// Mute/Unmute toggle
+muteBtn?.addEventListener('click', () => {
+    if (bgVideo.muted) {
+        bgVideo.muted = false;
+        muteBtn.textContent = '🔊';
+        muteBtn.title = 'Mute';
+    } else {
+        bgVideo.muted = true;
+        muteBtn.textContent = '🔇';
+        muteBtn.title = 'Unmute';
+    }
+});
+
+// Play/Pause toggle
+pauseVideoBtn?.addEventListener('click', () => {
+    if (bgVideo.paused) {
+        bgVideo.play();
+        pauseVideoBtn.textContent = '⏸️';
+        pauseVideoBtn.title = 'Pause';
+    } else {
+        bgVideo.pause();
+        pauseVideoBtn.textContent = '▶️';
+        pauseVideoBtn.title = 'Play';
+    }
+});
+
+// Ensure video plays on mobile (some browsers block autoplay)
+document.addEventListener('click', () => {
+    if (bgVideo && bgVideo.paused) {
+        bgVideo.play().catch(() => {});
+    }
+}, { once: true });

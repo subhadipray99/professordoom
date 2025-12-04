@@ -113,7 +113,20 @@
 
     <!-- Upload Screen -->
     <div class="screen" id="uploadScreen" style="display: none;">
-        <div class="fog"></div>
+        <!-- Video Background -->
+        <div class="video-bg">
+            <video id="bgVideo" autoplay muted loop playsinline>
+                <source src="https://pwsyzfqunlxjdxoijtwj.supabase.co/storage/v1/object/public/ajantayou99-cell's%20Org/Spooky_Pumpkin_Professor_Video.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        
+        <!-- Video Controls -->
+        <div class="video-controls">
+            <button class="video-ctrl-btn" id="muteBtn" title="Toggle Sound">🔇</button>
+            <button class="video-ctrl-btn" id="pauseVideoBtn" title="Pause/Play">⏸️</button>
+        </div>
+        
         <div class="container">
             <div class="professor-header">
                 <div class="professor-icon">🎃</div>

@@ -2322,3 +2322,152 @@ button, a, .upload-box, .section-btn, .feature-card {
     from { opacity: 0; transform: translateX(-50%) translateY(5px); }
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
+
+
+/* ==================== VIDEO BACKGROUND ==================== */
+
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.video-bg video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 15, 0.6);
+    pointer-events: none;
+}
+
+/* Video Controls */
+.video-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.video-ctrl-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.video-ctrl-btn:hover {
+    background: rgba(255, 68, 68, 0.6);
+    border-color: var(--accent);
+    transform: scale(1.1);
+}
+
+/* Ensure content is above video */
+#uploadScreen .container {
+    position: relative;
+    z-index: 1;
+}
+
+#uploadScreen .professor-header {
+    background: rgba(10, 10, 15, 0.7);
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+#uploadScreen .upload-box {
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .video-bg video {
+        width: auto;
+        height: 100%;
+    }
+    
+    .video-controls {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .video-ctrl-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+    }
+    
+    #uploadScreen .professor-header {
+        padding: 20px;
+        margin: 0 15px;
+    }
+    
+    #uploadScreen .professor-header h1 {
+        font-size: 2.5em;
+    }
+    
+    #uploadScreen .upload-box {
+        margin: 0 15px;
+        padding: 40px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-controls {
+        bottom: 10px;
+        right: 10px;
+        gap: 8px;
+    }
+    
+    .video-ctrl-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9em;
+    }
+    
+    #uploadScreen .professor-header h1 {
+        font-size: 2em;
+    }
+    
+    #uploadScreen .professor-icon {
+        font-size: 60px;
+    }
+}
+
+/* Portrait mode optimization */
+@media (orientation: portrait) {
+    .video-bg video {
+        width: auto;
+        height: 120%;
+    }
+}
