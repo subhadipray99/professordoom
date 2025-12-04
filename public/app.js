@@ -1321,7 +1321,7 @@ const bgVideo = document.getElementById('bgVideo');
 const muteBtn = document.getElementById('muteBtn');
 const pauseVideoBtn = document.getElementById('pauseVideoBtn');
 
-// Mute/Unmute toggle
+// Mute/Unmute toggle (starts unmuted)
 muteBtn?.addEventListener('click', () => {
     if (bgVideo.muted) {
         bgVideo.muted = false;

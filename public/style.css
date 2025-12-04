@@ -63,6 +63,12 @@ body.no-scroll {
     z-index: 1;
 }
 
+/* Left-aligned upload container */
+#uploadScreen .upload-container-left {
+    align-items: flex-start;
+    padding-left: 8%;
+}
+
 .professor-header {
     text-align: center;
     margin-bottom: 40px;
