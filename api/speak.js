@@ -21,16 +21,18 @@ export default async function handler(req, res) {
     
     const truncatedText = text.length > 3000 ? text.substring(0, 3000) + '...' : text;
 
+    console.log('Murf API Key exists:', !!process.env.MURF_API_KEY);
+    console.log('Voice ID:', process.env.MURF_VOICE_ID);
+
     // Use Murf AI API
     const response = await axios.post(
       'https://api.murf.ai/v1/speech/generate',
       {
-        voiceId: process.env.MURF_VOICE_ID || 'Terrell',
+        voiceId: process.env.MURF_VOICE_ID || 'en-US-terrell',
         style: 'Conversational',
         text: truncatedText,
         format: 'MP3',
-        sampleRate: 48000,
-        modelVersion: 'Falcon'
+        sampleRate: 48000
       },
       {
         headers: {
@@ -39,6 +41,8 @@ export default async function handler(req, res) {
         }
       }
     );
+
+    console.log('Murf response:', JSON.stringify(response.data));
 
     // Murf returns audioFile URL, download it
     if (response.data && response.data.audioFile) {
@@ -49,14 +53,14 @@ export default async function handler(req, res) {
       res.setHeader('Content-Type', 'audio/mpeg');
       res.send(Buffer.from(audioResponse.data));
     } else {
-      throw new Error('No audio file in response');
+      throw new Error('No audio file in response: ' + JSON.stringify(response.data));
     }
 
   } catch (error) {
     console.error('TTS error:', error.response?.data || error.message);
     res.status(500).json({ 
       error: 'Failed to generate speech', 
-      detail: error.response?.data || error.message 
+      detail: JSON.stringify(error.response?.data) || error.message 
     });
   }
 }
