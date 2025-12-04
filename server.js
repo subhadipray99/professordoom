@@ -103,46 +103,54 @@ ${resumeText}`;
   }
 });
 
-// Text-to-speech endpoint
+// Text-to-speech endpoint (using Murf AI)
 app.post('/api/speak', async (req, res) => {
   try {
     const { text } = req.body;
 
-    // Truncate text if too long for ElevenLabs
-    const truncatedText = text.length > 5000 ? text.substring(0, 5000) + '...' : text;
+    if (!text) {
+      return res.status(400).json({ error: 'No text provided' });
+    }
 
+    const truncatedText = text.length > 3000 ? text.substring(0, 3000) + '...' : text;
+
+    // Use Murf AI API
     const response = await axios.post(
-      `https://api.elevenlabs.io/v1/text-to-speech/${process.env.ELEVENLABS_VOICE_ID}`,
+      'https://api.murf.ai/v1/speech/generate',
       {
+        voiceId: process.env.MURF_VOICE_ID || 'Terrell',
+        style: 'Conversational',
         text: truncatedText,
-        model_id: 'eleven_multilingual_v2',
-        voice_settings: {
-          stability: 0.3,
-          similarity_boost: 0.8,
-          style: 0.5
-        }
+        format: 'MP3',
+        sampleRate: 48000,
+        modelVersion: 'Falcon'
       },
       {
         headers: {
-          'Accept': 'audio/mpeg',
-          'xi-api-key': process.env.ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
-        },
-        responseType: 'arraybuffer'
+          'Content-Type': 'application/json',
+          'api-key': process.env.MURF_API_KEY
+        }
       }
     );
 
-    res.set('Content-Type', 'audio/mpeg');
-    res.send(response.data);
+    // Murf returns audioFile URL, download it
+    if (response.data && response.data.audioFile) {
+      const audioResponse = await axios.get(response.data.audioFile, {
+        responseType: 'arraybuffer'
+      });
+      
+      res.set('Content-Type', 'audio/mpeg');
+      res.send(audioResponse.data);
+    } else {
+      throw new Error('No audio file in response');
+    }
 
   } catch (error) {
-    const errorDetail = error.response?.data 
-      ? Buffer.isBuffer(error.response.data) 
-        ? error.response.data.toString() 
-        : JSON.stringify(error.response.data)
-      : error.message;
-    console.error('TTS error:', errorDetail);
-    res.status(500).json({ error: 'Failed to generate speech', detail: errorDetail });
+    console.error('TTS error:', error.response?.data || error.message);
+    res.status(500).json({ 
+      error: 'Failed to generate speech', 
+      detail: error.response?.data || error.message 
+    });
   }
 });
 

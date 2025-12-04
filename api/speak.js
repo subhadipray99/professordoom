@@ -14,34 +14,49 @@ export default async function handler(req, res) {
 
   try {
     const { text } = req.body;
-    const truncatedText = text.length > 5000 ? text.substring(0, 5000) + '...' : text;
+    
+    if (!text) {
+      return res.status(400).json({ error: 'No text provided' });
+    }
+    
+    const truncatedText = text.length > 3000 ? text.substring(0, 3000) + '...' : text;
 
+    // Use Murf AI API
     const response = await axios.post(
-      `https://api.elevenlabs.io/v1/text-to-speech/${process.env.ELEVENLABS_VOICE_ID}`,
+      'https://api.murf.ai/v1/speech/generate',
       {
+        voiceId: process.env.MURF_VOICE_ID || 'Terrell',
+        style: 'Conversational',
         text: truncatedText,
-        model_id: 'eleven_multilingual_v2',
-        voice_settings: {
-          stability: 0.3,
-          similarity_boost: 0.8,
-          style: 0.5
-        }
+        format: 'MP3',
+        sampleRate: 48000,
+        modelVersion: 'Falcon'
       },
       {
         headers: {
-          'Accept': 'audio/mpeg',
-          'xi-api-key': process.env.ELEVENLABS_API_KEY,
-          'Content-Type': 'application/json'
-        },
-        responseType: 'arraybuffer'
+          'Content-Type': 'application/json',
+          'api-key': process.env.MURF_API_KEY
+        }
       }
     );
 
-    res.setHeader('Content-Type', 'audio/mpeg');
-    res.send(Buffer.from(response.data));
+    // Murf returns audioFile URL, download it
+    if (response.data && response.data.audioFile) {
+      const audioResponse = await axios.get(response.data.audioFile, {
+        responseType: 'arraybuffer'
+      });
+      
+      res.setHeader('Content-Type', 'audio/mpeg');
+      res.send(Buffer.from(audioResponse.data));
+    } else {
+      throw new Error('No audio file in response');
+    }
 
   } catch (error) {
-    console.error('TTS error:', error);
-    res.status(500).json({ error: 'Failed to generate speech' });
+    console.error('TTS error:', error.response?.data || error.message);
+    res.status(500).json({ 
+      error: 'Failed to generate speech', 
+      detail: error.response?.data || error.message 
+    });
   }
 }

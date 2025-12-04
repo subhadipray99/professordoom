@@ -2,6 +2,8 @@ import formidable from 'formidable';
 import pdfParse from 'pdf-parse';
 import axios from 'axios';
 import fs from 'fs';
+import path from 'path';
+import os from 'os';
 
 export const config = {
   api: {
@@ -28,7 +30,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const form = formidable({ maxFileSize: 5 * 1024 * 1024 });
+    const form = formidable({ 
+      maxFileSize: 5 * 1024 * 1024,
+      uploadDir: os.tmpdir(),
+      keepExtensions: true
+    });
     
     const [fields, files] = await form.parse(req);
     const file = files.resume?.[0];
@@ -42,7 +48,11 @@ export default async function handler(req, res) {
     const resumeText = pdfData.text;
 
     // Clean up temp file
-    fs.unlinkSync(file.filepath);
+    try {
+      fs.unlinkSync(file.filepath);
+    } catch (e) {
+      // Ignore cleanup errors
+    }
 
     if (!resumeText || resumeText.trim().length < 50) {
       return res.status(400).json({ error: 'Resume appears empty or too short.' });
@@ -71,7 +81,7 @@ ${resumeText}`;
     res.json({ success: true, analysis, resumeText });
 
   } catch (error) {
-    console.error('Analysis error:', error);
+    console.error('Analysis error:', error.message, error.stack);
     res.status(500).json({ error: error.message || 'Failed to analyze resume' });
   }
 }
