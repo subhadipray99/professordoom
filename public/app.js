@@ -373,7 +373,6 @@ async function sendCustomMessage() {
         if (data.success) {
             chatHistory.push({ role: 'assistant', content: data.response });
             displayMessage('custom', data.response);
-            trackManualChat(); // Track for Summary Room unlock
         } else {
             throw new Error(data.error);
         }
@@ -405,23 +404,12 @@ newResumeBtn.addEventListener('click', () => {
     rawResumeText = null;
     chatHistory = [];
     confessions = [];
-    manualChatCount = 0;
     analysisCache = {};
     chatMessages.innerHTML = '';
     resumeInput.value = '';
     updateConfessionCount();
-    resetSummaryLock();
     showScreen('upload');
 });
-
-// Reset summary lock
-function resetSummaryLock() {
-    summaryBtn.classList.add('locked');
-    summaryBtn.classList.remove('unlocked');
-    summaryLock.style.display = 'inline';
-    unlockProgress.style.display = 'inline';
-    unlockProgress.textContent = '0/3';
-}
 
 // Screen management
 function showScreen(screen) {
@@ -619,7 +607,6 @@ const summaryLock = document.getElementById('summaryLock');
 const unlockProgress = document.getElementById('unlockProgress');
 
 // Summary state
-let manualChatCount = 0;
 let summaryData = {
     gender: null,
     language: null,
@@ -627,31 +614,8 @@ let summaryData = {
     audioBlob: null
 };
 
-// Track manual chats for unlocking
-function trackManualChat() {
-    manualChatCount++;
-    updateSummaryLock();
-}
-
-// Update summary lock status
-function updateSummaryLock() {
-    const progress = Math.min(manualChatCount, 3);
-    unlockProgress.textContent = `${progress}/3`;
-    
-    if (manualChatCount >= 3) {
-        summaryBtn.classList.remove('locked');
-        summaryBtn.classList.add('unlocked');
-        summaryLock.style.display = 'none';
-        unlockProgress.style.display = 'none';
-    }
-}
-
-// Open summary modal
+// Open summary modal (always accessible)
 summaryBtn.addEventListener('click', () => {
-    if (summaryBtn.classList.contains('locked')) {
-        alert(`Send ${3 - manualChatCount} more messages to unlock the Summary Room!`);
-        return;
-    }
     summaryModal.style.display = 'flex';
     startSummaryFlow();
 });
@@ -1321,10 +1285,12 @@ const bgVideo = document.getElementById('bgVideo');
 const muteBtn = document.getElementById('muteBtn');
 const pauseVideoBtn = document.getElementById('pauseVideoBtn');
 let firstPlayComplete = false;
+let lastTime = 0;
 
-// Auto-mute after first loop completes
-bgVideo?.addEventListener('ended', () => {
-    if (!firstPlayComplete) {
+// Auto-mute after first loop completes (detect loop restart)
+bgVideo?.addEventListener('timeupdate', () => {
+    if (!firstPlayComplete && bgVideo.currentTime < lastTime) {
+        // Video looped back - first play complete
         firstPlayComplete = true;
         bgVideo.muted = true;
         if (muteBtn) {
@@ -1332,6 +1298,7 @@ bgVideo?.addEventListener('ended', () => {
             muteBtn.title = 'Unmute';
         }
     }
+    lastTime = bgVideo.currentTime;
 });
 
 // Mute/Unmute toggle
