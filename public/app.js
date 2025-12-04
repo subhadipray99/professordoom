@@ -1284,22 +1284,20 @@ console.log('%cBuilt for Kiroween Hackathon 2024',
 const bgVideo = document.getElementById('bgVideo');
 const muteBtn = document.getElementById('muteBtn');
 const pauseVideoBtn = document.getElementById('pauseVideoBtn');
-let firstPlayComplete = false;
-let lastTime = 0;
+let autoMuteTimer = null;
 
-// Auto-mute after first loop completes (detect loop restart)
-bgVideo?.addEventListener('timeupdate', () => {
-    if (!firstPlayComplete && bgVideo.currentTime < lastTime) {
-        // Video looped back - first play complete
-        firstPlayComplete = true;
-        bgVideo.muted = true;
-        if (muteBtn) {
-            muteBtn.textContent = '🔇';
-            muteBtn.title = 'Unmute';
+// Auto-mute after 8 seconds
+if (bgVideo) {
+    autoMuteTimer = setTimeout(() => {
+        if (!bgVideo.muted) {
+            bgVideo.muted = true;
+            if (muteBtn) {
+                muteBtn.textContent = '🔇';
+                muteBtn.title = 'Unmute';
+            }
         }
-    }
-    lastTime = bgVideo.currentTime;
-});
+    }, 8000);
+}
 
 // Mute/Unmute toggle
 muteBtn?.addEventListener('click', () => {
