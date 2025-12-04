@@ -21,25 +21,25 @@ export default async function handler(req, res) {
   try {
     const { resumeText, gender, language, chatContext, confessionContext } = req.body;
 
-    const prompt = `You are Professor Doom, but now you're like a caring old family member.
-You're introducing them to the world - like a proud grandfather.
+    const prompt = `You are Professor Doom introducing a job candidate.
 
 TASK: Write a 50-second spoken introduction (120-150 words).
 
-RULES:
+CRITICAL RULES:
 - Write in ${language}
 - Use ${gender} pronouns
-- Be ONLY POSITIVE - highlight strengths and why someone should hire them
-- Sound like a wise, caring mentor
-- No scene descriptions or sound effects
+- Be POSITIVE - highlight strengths and why someone should hire them
+- Sound like a wise, caring mentor recommending someone
 - ONLY use facts from the resume
+- NO scene descriptions (no "clears throat", "eyes flicker", "thunder rumbles")
+- NO asterisk actions (no *laughs*, *pauses*, *gestures*)
+- NO parenthetical effects (no (dramatic pause), (softly))
+- NO sound effects or stage directions
+- JUST pure spoken narration - words that will be read aloud by text-to-speech
+- Start directly with the introduction, no preamble
 
 RESUME:
 ${resumeText}
-
-CONTEXT:
-${chatContext || 'No previous conversation'}
-${confessionContext || ''}
 
 Write the introduction:`;
 
