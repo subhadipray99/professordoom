@@ -2649,3 +2649,60 @@ button, a, .upload-box, .section-btn, .feature-card {
         display: none;
     }
 }
+
+
+/* ==================== SCROLL INDICATOR ==================== */
+
+.scroll-indicator {
+    margin-top: 40px;
+    animation: fadeInUp 1s ease 2s both;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-text {
+    display: block;
+    color: var(--text-dim);
+    font-size: 1em;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: textFlicker 3s infinite;
+}
+
+@keyframes textFlicker {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+    52% { opacity: 0.5; }
+    54% { opacity: 1; }
+}
+
+.scroll-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    animation: bounceDown 2s ease-in-out infinite;
+}
+
+.scroll-arrow span {
+    font-size: 1.5em;
+    opacity: 0.8;
+}
+
+.scroll-arrow span:nth-child(1) { animation: arrowFade 2s infinite 0s; }
+.scroll-arrow span:nth-child(2) { animation: arrowFade 2s infinite 0.3s; font-size: 2em; }
+.scroll-arrow span:nth-child(3) { animation: arrowFade 2s infinite 0.6s; }
+
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+@keyframes arrowFade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
