@@ -1,58 +1,114 @@
-# Resume Roaster 🎃
+# 🎃 Professor Doom - Resume Roaster
 
-An AI-powered resume analyzer that roasts your CV with a horror-themed voice using ElevenLabs and Gemini AI.
+> *"I've seen thousands of resumes... most belong in a graveyard."* - Professor Doom
 
-## Features
+A spooky, AI-powered resume analyzer that roasts your CV with dark humor while providing genuinely helpful career advice. Built for the **Kiroween Hackathon 2024**.
 
-- Upload PDF resumes
-- AI-powered analysis with brutal honesty
-- Horror-themed voice feedback
-- Checks AI replacement risk
-- Future-proof career scoring
-- Job eligibility suggestions
+![Professor Doom](public/professor.png)
 
-## Setup
+## 🦇 Features
 
-1. Install dependencies:
+### Core Analysis
+- **🔥 Brutal Roasts** - Get your resume torn apart with dark humor
+- **🤖 AI Replacement Risk** - Find out if robots are coming for your job
+- **🛡️ Futureproof Score** - How resilient is your career?
+- **📈 What to Improve** - Actionable improvement tips
+- **💼 Eligible Jobs** - Jobs you're actually qualified for
+
+### Interactive Features
+- **🕯️ Confession Booth** - Confess resume exaggerations, get redemption tips
+- **🎙️ Summary Room** - Get a positive voice introduction (unlocks after 3 chats)
+- **📚 Learning Crypt** - Find courses to improve your skills (powered by Exa.ai)
+- **📈 Skill Trends** - Discover trending skills in your industry (powered by Exa.ai)
+
+### Voice & Audio
+- **Horror Voice** - ElevenLabs text-to-speech with spooky voice
+- **Per-section Audio** - Play audio for any response
+- **Downloadable Summaries** - Save your introduction as MP3
+
+## 🛠️ Tech Stack
+
+- **Backend:** Node.js + Express
+- **AI Brain:** Google Gemini API (gemini-2.0-flash)
+- **Voice:** ElevenLabs API (eleven_multilingual_v2)
+- **Search:** Exa.ai API (neural search)
+- **Frontend:** Vanilla HTML/CSS/JavaScript
+- **PDF Parsing:** pdf-parse
+- **Deployment:** Vercel
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- API Keys for: Gemini, ElevenLabs, Exa.ai
+
+### Installation
+
 ```bash
+# Clone the repo
+git clone https://github.com/subhadipray99/professordoom.git
+cd professordoom
+
+# Install dependencies
 npm install
-```
 
-2. Create `.env` file:
-```bash
+# Set up environment variables
 cp .env.example .env
-```
+# Edit .env with your API keys
 
-3. Add your API keys to `.env`:
-   - Get Gemini API key: https://makersuite.google.com/app/apikey
-   - Get ElevenLabs API key: https://elevenlabs.io/
-   - Find a horror voice ID in ElevenLabs voice library
-
-4. Run the server:
-```bash
+# Start the server
 npm start
 ```
 
-5. Open http://localhost:3000
+Visit `http://localhost:3000`
 
-## Finding a Horror Voice
+## 🔑 Environment Variables
 
-1. Go to ElevenLabs Voice Library
-2. Search for voices with dark/horror characteristics
-3. Some suggestions: "Adam" (deep), "Antoni" (dramatic), or create a custom voice
-4. Copy the Voice ID and add to your `.env` file
+```env
+GEMINI_API_KEY=your_gemini_api_key
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+ELEVENLABS_VOICE_ID=your_voice_id
+EXA_API_KEY=your_exa_api_key
+PORT=3000
+```
 
-## Tech Stack
+## 📁 Project Structure
 
-- Backend: Node.js + Express
-- AI: Google Gemini API (free tier)
-- Voice: ElevenLabs API
-- Frontend: Vanilla JavaScript
-- PDF Parsing: pdf-parse
+```
+professordoom/
+├── .kiro/                    # Kiro IDE configuration
+│   ├── specs/               # Feature specifications
+│   ├── hooks/               # Agent hooks
+│   └── steering/            # AI personality & guidelines
+├── api/                     # Vercel serverless functions
+├── public/                  # Frontend assets
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── server.js               # Express server (local dev)
+└── package.json
+```
 
-## API Endpoints
+## 🎃 Kiroween Hackathon
 
-- `POST /api/analyze` - Upload and analyze resume
-- `POST /api/speak` - Convert text to horror voice
+This project was built for the [Kiroween Hackathon](https://kiroween.devpost.com/) using Kiro IDE.
 
-Enjoy the roast! 👻
+### Kiro Features Used
+- **Specs** - Structured feature development with requirements, design, and tasks
+- **Steering** - Custom AI personality rules for Professor Doom
+- **Hooks** - Automated reminders and checks
+
+## 📜 License
+
+MIT License - See [LICENSE](LICENSE) file
+
+## 👻 Credits
+
+- Built with [Kiro IDE](https://kiro.dev)
+- AI powered by [Google Gemini](https://ai.google.dev/)
+- Voice by [ElevenLabs](https://elevenlabs.io/)
+- Search by [Exa.ai](https://exa.ai/)
+
+---
+
+*Enter if you dare... 💀*
