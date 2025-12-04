@@ -136,8 +136,13 @@ app.post('/api/speak', async (req, res) => {
     res.send(response.data);
 
   } catch (error) {
-    console.error('TTS error:', error.response?.data || error.message);
-    res.status(500).json({ error: 'Failed to generate speech' });
+    const errorDetail = error.response?.data 
+      ? Buffer.isBuffer(error.response.data) 
+        ? error.response.data.toString() 
+        : JSON.stringify(error.response.data)
+      : error.message;
+    console.error('TTS error:', errorDetail);
+    res.status(500).json({ error: 'Failed to generate speech', detail: errorDetail });
   }
 });
 
