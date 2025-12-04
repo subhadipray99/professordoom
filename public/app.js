@@ -1201,3 +1201,115 @@ function resetTrendsModal() {
     customIndustry.value = '';
     document.querySelectorAll('.industry-btn').forEach(btn => btn.classList.remove('selected'));
 }
+
+
+// ==================== COSTUME CONTEST UI ENHANCEMENTS ====================
+
+// Create floating particles
+function createParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+    
+    const particleEmojis = ['💀', '👻', '🦇', '🕷️', '⚰️', '🕯️', '🎃', '🩸'];
+    
+    for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('span');
+        particle.className = 'particle';
+        particle.textContent = particleEmojis[Math.floor(Math.random() * particleEmojis.length)];
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(particle);
+    }
+}
+
+// Lightning flash effect on roast
+function triggerLightning() {
+    document.body.classList.add('lightning-flash');
+    setTimeout(() => document.body.classList.remove('lightning-flash'), 100);
+}
+
+// Shake effect for dramatic moments
+function triggerShake(element) {
+    element.classList.add('shake');
+    setTimeout(() => element.classList.remove('shake'), 500);
+}
+
+// Add heartbeat to loading
+function addHeartbeat(element) {
+    element.classList.add('heartbeat');
+}
+
+// Random spooky sound effect (visual feedback)
+function spookyFeedback() {
+    const messages = ['💀', '👻', '🎃', '⚰️'];
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+    
+    const feedback = document.createElement('div');
+    feedback.textContent = msg;
+    feedback.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 5em;
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 9999;
+        animation: feedbackPop 0.5s ease-out forwards;
+    `;
+    document.body.appendChild(feedback);
+    
+    setTimeout(() => feedback.remove(), 500);
+}
+
+// Add CSS for feedback animation
+const feedbackStyle = document.createElement('style');
+feedbackStyle.textContent = `
+    @keyframes feedbackPop {
+        0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+`;
+document.head.appendChild(feedbackStyle);
+
+// Initialize particles on load
+createParticles();
+
+// Add spooky hover sounds (visual only)
+document.querySelectorAll('.section-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        btn.style.transform = 'translateX(5px)';
+    });
+    btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+    });
+});
+
+// Trigger lightning on roast section click
+document.querySelector('[data-section="roast"]')?.addEventListener('click', () => {
+    setTimeout(triggerLightning, 100);
+});
+
+// Add glow effect to landing title
+document.querySelector('.title-line.doom')?.classList.add('glow-text');
+
+// Easter egg: Konami code reveals secret message
+let konamiCode = [];
+const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.key);
+    konamiCode = konamiCode.slice(-10);
+    
+    if (konamiCode.join(',') === konamiSequence.join(',')) {
+        alert('🎃 Professor Doom whispers: "You found my secret... but your resume still needs work!" 💀');
+        spookyFeedback();
+    }
+});
+
+console.log('%c🎃 Professor Doom is watching your console... 💀', 
+    'color: #ff4444; font-size: 20px; font-weight: bold; text-shadow: 2px 2px #000;');
+console.log('%cBuilt for Kiroween Hackathon 2024', 
+    'color: #8a2be2; font-size: 14px;');
