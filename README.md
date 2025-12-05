@@ -2,7 +2,7 @@
 
 > *"I've seen thousands of resumes... most belong in a graveyard."* - Professor Doom
 
-A spooky, AI-powered resume analyzer that roasts your CV with dark humor while providing genuinely helpful career advice. Built for the **Kiroween Hackathon 2024**.
+A spooky, AI-powered resume analyzer that roasts your CV with dark humor while providing genuinely helpful career advice. Built for the **Kiroween Hackathon 2025**.
 
 ![Professor Doom](public/professor.png)
 
